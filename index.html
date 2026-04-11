@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Cache Control - Force Fresh Load -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Wedding Invitation — Aiden & Sophia</title>
@@ -314,302 +319,6 @@
 
     /* ══ COUNTDOWN ══ */
     .countdown-section {
-      padding: 60px 28px; background: var(--cream);
-      border-top: 1px solid rgba(184,150,90,0.2);
-      border-bottom: 1px solid rgba(184,150,90,0.2);
-    }
-    .countdown-container {
-      max-width: 700px; margin: 0 auto;
-      display: flex; justify-content: center;
-      gap: 20px;
-    }
-    .countdown-box {
-      flex: 1; text-align: center;
-      padding: 24px 16px;
-      background: white;
-      border: 1px solid rgba(184,150,90,0.2);
-      max-width: 130px;
-    }
-    .countdown-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3rem; font-weight: 300;
-      color: var(--dark); display: block;
-      line-height: 1;
-    }
-    .countdown-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.6rem; color: var(--gold);
-      letter-spacing: 0.2em; text-transform: uppercase;
-      margin-top: 8px; display: block;
-    }
-
-    /* ══ GALLERY ══ */
-    .gallery-section {
-      padding: 100px 28px; background: white;
-    }
-    .gallery-grid {
-      max-width: 1000px; margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-    }
-    @media(max-width:768px) {
-      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    .gallery-item {
-      aspect-ratio: 1;
-      overflow: hidden; cursor: pointer;
-      position: relative;
-    }
-    .gallery-item img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.5s;
-    }
-    .gallery-item:hover img { transform: scale(1.1); }
-    .gallery-item::after {
-      content: '+'; position: absolute;
-      inset: 0; background: rgba(42,31,20,0.5);
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 2rem; opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .gallery-item:hover::after { opacity: 1; }
-
-    /* ══ LIGHTBOX ══ */
-    .lightbox {
-      position: fixed; inset: 0; z-index: 2000;
-      background: rgba(0,0,0,0.95);
-      display: none; align-items: center; justify-content: center;
-      padding: 20px;
-    }
-    .lightbox.active { display: flex; }
-    .lightbox img {
-      max-width: 90%; max-height: 90vh;
-      object-fit: contain;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    }
-    .lightbox-close {
-      position: absolute; top: 30px; right: 30px;
-      width: 50px; height: 50px;
-      background: transparent; border: 1px solid rgba(255,255,255,0.3);
-      color: white; font-size: 2rem; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.3s;
-    }
-    .lightbox-close:hover {
-      border-color: var(--gold); color: var(--gold);
-    }
-
-    /* ══ RSVP ══ */
-    .rsvp-section {
-      padding: 100px 28px;
-      background: linear-gradient(to bottom, #f5ede0, var(--cream));
-    }
-    .rsvp-container {
-      max-width: 600px; margin: 0 auto;
-      background: white;
-      padding: 60px 40px;
-      border: 1px solid rgba(184,150,90,0.3);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-    }
-    .rsvp-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem; font-weight: 300;
-      text-align: center; margin-bottom: 12px;
-      color: var(--dark);
-    }
-    .rsvp-subtitle {
-      text-align: center; color: #888;
-      font-style: italic; margin-bottom: 40px;
-    }
-    .form-group { margin-bottom: 24px; }
-    .form-group label {
-      display: block;
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem; letter-spacing: 0.15em;
-      color: var(--gold); margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%; padding: 14px 16px;
-      border: 1px solid #e0d5c5;
-      background: #faf8f5;
-      font-family: 'EB Garamond', serif;
-      font-size: 1rem; color: var(--text);
-      transition: border-color 0.3s;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none; border-color: var(--gold);
-    }
-    .form-group textarea {
-      min-height: 100px; resize: vertical;
-    }
-    .radio-group {
-      display: flex; gap: 20px;
-    }
-    .radio-label {
-      display: flex; align-items: center; gap: 8px;
-      cursor: pointer;
-    }
-    .radio-label input[type="radio"] {
-      width: auto; accent-color: var(--gold);
-    }
-    .submit-btn {
-      width: 100%; padding: 18px;
-      background: var(--dark); color: white;
-      border: none; cursor: pointer;
-      font-family: 'Cinzel', serif;
-      font-size: 0.8rem; letter-spacing: 0.2em;
-      text-transform: uppercase;
-      transition: all 0.3s;
-    }
-    .submit-btn:hover {
-      background: var(--gold); color: var(--dark);
-    }
-
-    /* ══ WISHES ══ */
-    .wishes-section {
-      padding: 100px 28px; background: white;
-      max-height: 600px; overflow-y: auto;
-    }
-    .wishes-container {
-      max-width: 700px; margin: 0 auto;
-    }
-    .wish-card {
-      background: #faf8f5;
-      border-left: 3px solid var(--gold);
-      padding: 24px 28px; margin-bottom: 20px;
-      position: relative;
-    }
-    .wish-header {
-      display: flex; justify-content: space-between;
-      align-items: center; margin-bottom: 12px;
-    }
-    .wish-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem; font-weight: 600;
-      color: var(--dark);
-    }
-    .wish-date {
-      font-size: 0.8rem; color: #999;
-    }
-    .wish-text {
-      color: #555; line-height: 1.7;
-      font-style: italic;
-    }
-
-    /* ══ GIFT ══ */
-    .gift-section {
-      padding: 100px 28px;
-      background: linear-gradient(135deg, #2a1f14 0%, #1a1410 100%);
-      color: white; text-align: center;
-    }
-    .gift-text {
-      max-width: 500px; margin: 0 auto 40px;
-      color: rgba(255,255,255,0.8);
-      line-height: 1.8;
-    }
-    .bank-cards {
-      display: flex; justify-content: center;
-      gap: 30px; flex-wrap: wrap;
-      max-width: 800px; margin: 0 auto;
-    }
-    .bank-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(184,150,90,0.3);
-      padding: 30px 40px; min-width: 280px;
-    }
-    .bank-name {
-      font-family: 'Cinzel', serif;
-      font-size: 1rem; color: var(--gold);
-      letter-spacing: 0.1em; margin-bottom: 16px;
-    }
-    .bank-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem; letter-spacing: 0.05em;
-      margin-bottom: 8px; cursor: pointer;
-      transition: color 0.3s;
-    }
-    .bank-number:hover { color: var(--gold-light); }
-    .bank-holder {
-      font-size: 0.9rem; color: rgba(255,255,255,0.6);
-      margin-bottom: 16px;
-    }
-    .copy-btn {
-      padding: 8px 20px;
-      background: transparent;
-      border: 1px solid var(--gold);
-      color: var(--gold-light); cursor: pointer;
-      font-family: 'Cinzel', serif; font-size: 0.65rem;
-      letter-spacing: 0.15em; transition: all 0.3s;
-    }
-    .copy-btn:hover {
-      background: var(--gold); color: var(--dark);
-    }
-
-    /* ══ FOOTER ══ */
-    .footer {
-      padding: 60px 28px; text-align: center;
-      background: var(--cream);
-      border-top: 1px solid rgba(184,150,90,0.2);
-    }
-    .footer-names {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem; font-style: italic;
-      color: var(--dark); margin-bottom: 12px;
-    }
-    .footer-text {
-      font-size: 0.9rem; color: #888;
-      margin-bottom: 24px;
-    }
-    .social-links {
-      display: flex; justify-content: center;
-      gap: 16px; margin-bottom: 40px;
-    }
-    .social-link {
-      width: 44px; height: 44px;
-      border: 1px solid rgba(184,150,90,0.4);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--gold); text-decoration: none;
-      transition: all 0.3s;
-    }
-    .social-link:hover {
-      background: var(--gold); color: white;
-    }
-    .copyright {
-      font-size: 0.75rem; color: #aaa;
-    }
-
-    /* ══ PETALS ══ */
-    .petal {
-      position: fixed; width: 10px; height: 14px;
-      border-radius: 50% 0 50% 0;
-      background: rgba(212,180,131,0.4);
-      pointer-events: none; z-index: 1;
-      animation: fall linear infinite;
-    }
-    @keyframes fall {
-      0%   { transform: translateY(-40px) rotate(0deg); opacity:0; }
-      10%  { opacity:1; }
-      90%  { opacity:0.5; }
-      100% { transform: translateY(110vh) rotate(400deg); opacity:0; }
-    }
-
-    /* ══ ANIMATIONS ══ */
-    .fade-in {
-      opacity: 0; transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .fade-in.visible {
-      opacity: 1; transform: translateY(0);
-    }
-  
-  /* ══ COUNTDOWN STYLES ══ */
-  .countdown-section {
     padding: 80px 28px;
     background: linear-gradient(135deg, #2a1f14 0%, #1a1410 100%);
     color: white;
@@ -617,7 +326,7 @@
     position: relative;
     overflow: hidden;
   }
-  .countdown-section::before {
+  .::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -687,6 +396,52 @@
     .countdown-number { font-size: 2.5rem; }
     .countdown-label { font-size: 0.5rem; }
   }
+
+  /* ══ COVER COUNTDOWN ══ */
+  .cover-countdown {
+    margin-top: 40px;
+    opacity: 0;
+    animation: coverUp 0.9s 1.4s ease both;
+  }
+  .cover-countdown-text {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .cover-countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+  .cover-cd-unit {
+    text-align: center;
+    min-width: 60px;
+  }
+  .cover-cd-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1;
+  }
+  .cover-cd-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(184,150,90,0.7);
+    margin-top: 4px;
+    display: block;
+  }
+  @media(max-width: 480px) {
+    .cover-cd-unit { min-width: 50px; }
+    .cover-cd-number { font-size: 1.6rem; }
+  }
+
 </style>
 </head>
 <body>
@@ -721,8 +476,7 @@
 </div>
 
 <!-- ══ HERO PHOTO ══ -->
-<!-- ══ COUNTDOWN (First Section) ══ -->
-<section class="countdown-section inv-animate" style="margin-top:0; border-bottom: 1px solid rgba(184,150,90,0.2);">
+<section class=" inv-animate" style="margin-top:0; border-bottom: 1px solid rgba(184,150,90,0.2);">
   <h3 class="countdown-title">Counting Down to Our Big Day</h3>
   <div class="countdown-container">
     <div class="countdown-box">
@@ -984,7 +738,7 @@
   }
 
   // ══ Countdown ══
-  const weddingDate = new Date('2025-06-14T16:00:00');
+  const weddingDate = new Date('2026-06-14T16:00:00');
   function updateCountdown() {
     const diff = weddingDate - new Date();
     if (diff <= 0) {
@@ -1077,38 +831,30 @@
     if (e.key === 'Escape') closeLightbox();
   });
 
-  // ══ COUNTDOWN TIMER ══
-  // Set your wedding date here (YYYY-MM-DDTHH:MM:SS)
-  const WEDDING_DATE = new Date('2025-06-14T16:00:00'); // 4:00 PM
+  
 
-  function updateCountdown() {
-    const now = new Date();
-    const diff = WEDDING_DATE - now;
-
-    if (diff <= 0) {
-      // Wedding day or passed
-      document.getElementById('cd-days').textContent = '00';
-      document.getElementById('cd-hours').textContent = '00';
-      document.getElementById('cd-min').textContent = '00';
-      document.getElementById('cd-sec').textContent = '00';
-      document.getElementById('countdown-msg').textContent = "We're married! 💍 Thank you for celebrating with us!";
-      return;
+  // ══ VERSION CHECK - Force Reload if Cached ══
+  const CURRENT_VERSION = '2';
+  const savedVersion = localStorage.getItem('inviteVersion');
+  if (savedVersion !== CURRENT_VERSION) {
+    localStorage.setItem('inviteVersion', CURRENT_VERSION);
+    if (savedVersion) { // Only reload if was previously set (not first visit)
+      window.location.reload(true);
     }
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
-    document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
-    document.getElementById('cd-min').textContent = String(minutes).padStart(2, '0');
-    document.getElementById('cd-sec').textContent = String(seconds).padStart(2, '0');
   }
 
-  // Update immediately and then every second
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  // Cover Countdown
+  const WEDDING_DATE = new Date('2026-06-14T16:00:00');
+  function updateCoverCountdown() {
+    const diff = WEDDING_DATE - new Date();
+    if (diff <= 0) return;
+    document.getElementById('cover-cd-days').textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
+    document.getElementById('cover-cd-hours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+    document.getElementById('cover-cd-min').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    document.getElementById('cover-cd-sec').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+  }
+  updateCoverCountdown();
+  setInterval(updateCoverCountdown, 1000);
 </script>
 </body>
 </html>
