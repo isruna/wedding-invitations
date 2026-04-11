@@ -843,18 +843,54 @@
     }
   }
 
-  // Cover Countdown
-  const WEDDING_DATE = new Date('2026-06-14T16:00:00');
-  function updateCoverCountdown() {
-    const diff = WEDDING_DATE - new Date();
-    if (diff <= 0) return;
-    document.getElementById('cover-cd-days').textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
-    document.getElementById('cover-cd-hours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
-    document.getElementById('cover-cd-min').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
-    document.getElementById('cover-cd-sec').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
-  }
-  updateCoverCountdown();
-  setInterval(updateCoverCountdown, 1000);
+  // ══ COVER COUNTDOWN ══
+  (function() {
+    const WEDDING_DATE = new Date('2026-06-14T16:00:00');
+
+    function updateCoverCountdown() {
+      const daysEl = document.getElementById('cover-cd-days');
+      const hoursEl = document.getElementById('cover-cd-hours');
+      const minsEl = document.getElementById('cover-cd-min');
+      const secsEl = document.getElementById('cover-cd-sec');
+
+      // Exit if elements not found (safety check)
+      if (!daysEl || !hoursEl || !minsEl || !secsEl) return;
+
+      const now = new Date();
+      const diff = WEDDING_DATE - now;
+
+      if (diff <= 0) {
+        daysEl.textContent = '00';
+        hoursEl.textContent = '00';
+        minsEl.textContent = '00';
+        secsEl.textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      daysEl.textContent = String(days).padStart(2, '0');
+      hoursEl.textContent = String(hours).padStart(2, '0');
+      minsEl.textContent = String(minutes).padStart(2, '0');
+      secsEl.textContent = String(seconds).padStart(2, '0');
+    }
+
+    // Run when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        updateCoverCountdown();
+        setInterval(updateCoverCountdown, 1000);
+      });
+    } else {
+      // DOM already loaded
+      updateCoverCountdown();
+      setInterval(updateCoverCountdown, 1000);
+    }
+  })();
+
 </script>
 </body>
 </html>
