@@ -151,19 +151,29 @@
 
     /* ══ HERO SECTION ══ */
     .hero-photo {
-      position: relative; height: 100vh; min-height: 400px;
+      position: relative; 
+      min-height: 80vh; /* Reduced height to remove empty space */
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center; color: var(--text-dark);
-      padding: 20px;
+      padding: 60px 20px;
     }
     .hero-names {
-      font-size: clamp(4rem, 12vw, 5.5rem); color: var(--sage-dark);
-      line-height: 1; margin-bottom: 20px;
+      font-size: clamp(5rem, 18vw, 8rem); /* Made font larger to look elegant */
+      color: var(--sage-dark);
+      line-height: 0.85; 
+      margin-bottom: 20px;
+    }
+    .hero-amp {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.5em; /* Smaller ampersand */
+      color: var(--gold);
+      display: inline-block;
+      margin: 15px 0;
     }
     .hero-date {
       font-size: 1rem; letter-spacing: 0.4em;
       text-transform: uppercase; color: var(--gold);
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
 
     /* ══ QUOTE ══ */
@@ -419,10 +429,18 @@
 <!-- ══ MAIN INVITATION ══ -->
 <div id="invitation">
 
+  <!-- Hero Section -->
   <section class="page hero-photo">
     <div class="fade-in">
       <p class="hero-date">Pernikahan Kami</p>
-      <h1 class="hero-names font-script">Iqbal & Rina</h1>
+      
+      <!-- NAMA MEMPELAI VERTIKAL -->
+      <h1 class="hero-names font-script">
+        Iqbal<br>
+        <span class="hero-amp">&</span><br>
+        Rina
+      </h1>
+      
     </div>
   </section>
 
