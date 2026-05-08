@@ -9,7 +9,7 @@
   <title>Undangan Pernikahan — Iqbal & Rina</title>
   <script>
   // Change this version number every time you make a big update!
-  const currentVersion = '1.1'; 
+  const currentVersion = '1.2'; 
   
   if (localStorage.getItem('siteVersion') !== currentVersion) {
     localStorage.setItem('siteVersion', currentVersion);
@@ -398,6 +398,31 @@
       90%  { opacity: 0.6; }
       100% { transform: translateY(110vh) rotate(360deg) translateX(50px); opacity: 0; }
     }
+    /* ══ TOAST NOTIFICATION ══ */
+    .toast {
+      visibility: hidden;
+      min-width: 280px;
+      background-color: var(--sage-dark);
+      color: var(--white);
+      text-align: center;
+      border-radius: 30px;
+      padding: 16px;
+      position: fixed;
+      z-index: 9999;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: opacity 0.3s, bottom 0.3s, visibility 0.3s;
+    }
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      bottom: 50px;
+    }
   </style>
 </head>
 <body>
@@ -601,13 +626,13 @@
         <div class="bank-name">DANA</div>
         <div class="bank-number">08992583802</div>
         <div class="bank-holder">a.n Mjohamad Iqbal Raihan</div>
-        <button class="map-btn" style="margin-top: 5px; padding: 8px 20px;" onclick="copyToClipboard('1234567890')">Salin Rekening</button>
+        <button class="map-btn" style="margin-top: 5px; padding: 8px 20px;" onclick="copyToClipboard('08992583802')">Salin Rekening</button>
       </div>
     <div class="bank-card">
         <div class="bank-name">DANA</div>
         <div class="bank-number">085714338654</div>
         <div class="bank-holder">a.n Rina Herlina</div>
-        <button class="map-btn" style="margin-top: 5px; padding: 8px 20px;" onclick="copyToClipboard('0987654321')">Salin Rekening</button>
+        <button class="map-btn" style="margin-top: 5px; padding: 8px 20px;" onclick="copyToClipboard('085714338654')">Salin Rekening</button>
       </div>
     </div>
   </section>
@@ -734,7 +759,19 @@
   // ══ COPY TO CLIPBOARD ══
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
-      alert('Nomor rekening berhasil disalin: ' + text);
+      // Get the toast element
+      const toast = document.getElementById("toast");
+      
+      // Update text and show
+      toast.textContent = "Nomor rekening disalin: " + text;
+      toast.classList.add("show");
+      
+      // Remove the toast automatically after 3 seconds
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
     });
   }
 
@@ -817,6 +854,7 @@
     setInterval(spawn, 3000);
   }
 </script>
-
+<!-- Toast Notification -->
+<div id="toast" class="toast">Nomor rekening berhasil disalin!</div>
 </body>
 </html>
