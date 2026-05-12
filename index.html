@@ -652,16 +652,35 @@
 </div>
 
 <script>
-  // ══ NAMA TAMU DINAMIS ══
-  const params = new URLSearchParams(window.location.search);
-  const rawName = params.get('name') || params.get('to') || '';
-  const guestName = rawName ? decodeURIComponent(rawName.replace(/\+/g, ' ')) : '';
-
-  if (guestName) {
-    document.getElementById('coverGuestName').textContent = guestName;
-    document.title = 'Undangan: ' + guestName;
-  }
-
+// ══ GUEST NAME — Token lookup from guests.json ══
+  (async function() {
+    const params = new URLSearchParams(window.location.search);
+    const token  = params.get('id') || params.get('name') || '';
+    if (!token) return;
+ 
+    let guestName = '';
+ 
+    try {
+      const res = await fetch('./guests.json');
+      if (res.ok) {
+        const map = await res.json();
+        guestName = map[token] || '';
+      }
+    } catch(e) {}
+ 
+    if (!guestName && token.includes(' ')) {
+      guestName = decodeURIComponent(token.replace(/\+/g, ' '));
+    }
+ 
+    if (guestName) {
+      const coverEl = document.getElementById('coverGuestName');
+      const invEl   = document.getElementById('invGuestName');
+      if (coverEl) coverEl.textContent = guestName;
+      if (invEl)   invEl.textContent   = 'Dear ' + guestName + ',';
+      document.title = 'Undangan Pernikahan untuk ' + guestName;
+    }
+  })();
+  
   // ══ BUKA UNDANGAN & AUTO-PLAY MUSIK ══
   let isPlaying = false;
   
