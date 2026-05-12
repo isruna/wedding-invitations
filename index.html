@@ -652,29 +652,35 @@
 </div>
 
 <script>
-// ══ GUEST NAME — Token lookup from guests.json ══
-  (async function() {
-    const params = new URLSearchParams(window.location.search);
-    const token  = params.get('id') || params.get('name') || '';
+(async function() {
+    const params  = new URLSearchParams(window.location.search);
+    const token   = params.get('name') || params.get('to') || '';
+    const coverEl = document.getElementById('coverGuestName');
+    const invEl   = document.getElementById('invGuestName');
+ 
     if (!token) return;
  
     let guestName = '';
  
+    // Try to decode token from guests.json
     try {
-      const res = await fetch('./guests.json');
+      const res = await fetch('./guests.json?v=' + Date.now());
       if (res.ok) {
         const map = await res.json();
         guestName = map[token] || '';
       }
     } catch(e) {}
  
-    if (!guestName && token.includes(' ')) {
-      guestName = decodeURIComponent(token.replace(/\+/g, ' '));
+    // Fallback: if token looks like a real name (has spaces), use it directly
+    // This keeps old-style ?name=Abdul+Aziz links working too
+    if (!guestName) {
+      const decoded = decodeURIComponent(token.replace(/\+/g, ' '));
+      if (decoded.includes(' ') || decoded.length < 20) {
+        guestName = decoded;
+      }
     }
  
     if (guestName) {
-      const coverEl = document.getElementById('coverGuestName');
-      const invEl   = document.getElementById('invGuestName');
       if (coverEl) coverEl.textContent = guestName;
       if (invEl)   invEl.textContent   = 'Dear ' + guestName + ',';
       document.title = 'Undangan Pernikahan untuk ' + guestName;
