@@ -153,12 +153,14 @@
       if (!res.ok) throw new Error('guests.json tidak ditemukan (HTTP ' + res.status + ')');
       const map = await res.json(); // { token: name, ... }
 
-      allGuests = Object.entries(map).map(([token, name], i) => ({
-        index: i + 1,
-        name,
-        token,
-        link: window.location.origin + window.location.pathname.replace('copier.html','') + '?name=' + token
-      }));
+      allGuests = Object.entries(map).map(([token, val], i) => {
+        // Support both old format (token:name) and new format (token:{name,shortLink})
+        const name     = typeof val === 'object' ? val.name : val;
+        const base     = window.location.origin + window.location.pathname.replace('copier.html','');
+        const fullLink = base + '?name=' + token;
+        const shortLink = typeof val === 'object' && val.shortLink ? val.shortLink : '';
+        return { index: i + 1, name, token, link: shortLink || fullLink, fullLink };
+      });
 
       renderCards(allGuests);
     } catch(e) {
