@@ -196,6 +196,9 @@
   }
 
   // ── RENDER ──
+  // Store messages in a map keyed by index so onclick just passes index
+  let messageMap = {};
+
   function renderCards(guests) {
     const el = document.getElementById('cards');
     document.getElementById('countEl').textContent = guests.length + ' tamu';
@@ -203,12 +206,14 @@
       el.innerHTML = '<div class="empty">Tidak ada tamu ditemukan.</div>';
       return;
     }
+    messageMap = {};
+    guests.forEach(g => { messageMap[g.index] = buildMessage(g); });
     el.innerHTML = guests.map(g => `
       <div class="card" data-name="${g.name.toLowerCase()}">
         <div class="card-row">
           <span class="guest-num">${g.index}</span>
           <span class="guest-name">${escHtml(g.name)}</span>
-          <button class="btn-copy" onclick="doCopy(this, ${JSON.stringify(buildMessage(g))})">
+          <button class="btn-copy" onclick="doCopy(this, ${g.index})">
             📋 Copy Pesan
           </button>
         </div>
@@ -222,8 +227,22 @@
     renderCards(filtered);
   }
 
-  function doCopy(btn, msg) {
+  function doCopy(btn, index) {
+    const msg = messageMap[index];
+    if (!msg) return;
     navigator.clipboard.writeText(msg).then(() => {
+      btn.textContent = '✓ Tersalin!';
+      btn.classList.add('ok');
+      setTimeout(() => { btn.textContent = '📋 Copy Pesan'; btn.classList.remove('ok'); }, 2000);
+    }).catch(() => {
+      // Fallback for older mobile browsers
+      const ta = document.createElement('textarea');
+      ta.value = msg;
+      ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
       btn.textContent = '✓ Tersalin!';
       btn.classList.add('ok');
       setTimeout(() => { btn.textContent = '📋 Copy Pesan'; btn.classList.remove('ok'); }, 2000);
