@@ -667,7 +667,8 @@
       const res = await fetch('./guests.json?v=' + Date.now());
       if (res.ok) {
         const map = await res.json();
-        guestName = map[token] || '';
+        const val = map[token];
+        guestName = typeof val === 'object' ? val.name : (val || '');
       }
     } catch(e) {}
  
