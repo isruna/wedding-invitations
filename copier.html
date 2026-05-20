@@ -133,7 +133,7 @@
         const name = typeof val === 'object' ? val.name : val;
         const shortLink = typeof val === 'object' && val.shortLink ? val.shortLink : '';
         const base = window.location.href.replace('copier.html', '');
-        const fullLink = base + '?name=' + token;
+        const fullLink = base + '?id=' + token;
         return { i: i+1, name, link: shortLink || fullLink };
       });
 
