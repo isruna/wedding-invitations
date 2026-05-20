@@ -7,19 +7,14 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:sans-serif;background:#f0f7ff;color:#2a4a70;min-height:100vh;}
-
-  /* ── Lock screen ── */
   #lockScreen{
     position:fixed;inset:0;background:#1a3a5c;
     display:flex;flex-direction:column;
     align-items:center;justify-content:center;
     z-index:999;padding:32px;
   }
-  .lock-title{
-    font-size:1.1rem;letter-spacing:0.2em;text-transform:uppercase;
-    color:#a8cdf5;margin-bottom:8px;text-align:center;
-  }
-  .lock-sub{font-size:0.9rem;color:rgba(168,205,245,0.6);margin-bottom:36px;text-align:center;}
+  .lock-title{font-size:1.1rem;letter-spacing:0.2em;text-transform:uppercase;color:#a8cdf5;margin-bottom:8px;text-align:center;}
+  .lock-sub{font-size:0.9rem;color:rgba(168,205,245,0.6);margin-bottom:28px;text-align:center;}
   .lock-input{
     width:100%;max-width:300px;padding:14px 18px;
     background:rgba(255,255,255,0.08);border:1px solid rgba(168,205,245,0.4);
@@ -30,37 +25,28 @@
   .lock-input:focus{border-color:#a8cdf5;}
   .lock-btn{
     width:100%;max-width:300px;padding:14px;
-    background:#a8cdf5;color:#1a3a5c;
-    border:none;font-size:0.85rem;font-weight:700;
-    letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;
-    border-radius:2px;transition:opacity 0.2s;
+    background:#a8cdf5;color:#1a3a5c;border:none;
+    font-size:0.85rem;font-weight:700;letter-spacing:0.2em;
+    text-transform:uppercase;cursor:pointer;border-radius:2px;
   }
-  .lock-btn:hover{opacity:0.85;}
-  .lock-error{
-    color:#ff8a8a;font-size:0.85rem;
-    margin-top:12px;text-align:center;
-    min-height:20px;
-  }
-
-  /* ── Main app ── */
-  #app{display:none;padding:16px;}
+  .lock-error{color:#ff8a8a;font-size:0.85rem;margin-top:12px;text-align:center;min-height:20px;}
+  #app{display:none;}
   .app-header{
     background:#1a3a5c;color:#a8cdf5;
-    padding:16px 20px;margin:-16px -16px 16px;
+    padding:16px 20px;
     position:sticky;top:0;z-index:10;
   }
-  .app-title{font-size:0.9rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;}
+  .app-title{font-size:0.9rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:2px;}
   .app-sub{font-size:0.75rem;color:rgba(168,205,245,0.6);}
-  .app-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px;}
+  .app-body{padding:16px;}
   .search{
-    flex:1;min-width:0;padding:10px 14px;
+    width:100%;padding:10px 14px;
     border:1px solid #c2daf5;font-size:1rem;
     border-radius:4px;outline:none;background:white;color:#2a4a70;
+    margin-bottom:10px;
   }
   .search:focus{border-color:#3a7bd5;}
-  .count{font-size:0.8rem;color:#5a80aa;padding:4px 0;}
-
-  /* ── Cards ── */
+  .count{font-size:0.8rem;color:#5a80aa;margin-bottom:12px;}
   .card{
     background:white;border:1px solid #c2daf5;
     border-left:3px solid #3a7bd5;
@@ -69,187 +55,165 @@
   .card-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
   .guest-num{font-size:0.75rem;color:#a8cdf5;min-width:20px;flex-shrink:0;}
   .guest-name{font-size:1rem;color:#1a3a5c;font-weight:600;flex:1;min-width:0;}
-  .guest-link{font-size:0.75rem;color:#3a7bd5;word-break:break-all;width:100%;margin-top:4px;}
+  .guest-link{font-size:0.72rem;color:#3a7bd5;word-break:break-all;width:100%;margin-top:6px;}
   .btn-copy{
-    padding:10px 18px;background:#1a3a5c;color:#a8cdf5;
+    padding:10px 16px;background:#1a3a5c;color:#a8cdf5;
     border:1px solid #3a7bd5;font-size:0.75rem;
-    cursor:pointer;letter-spacing:0.1em;white-space:nowrap;
-    flex-shrink:0;border-radius:2px;transition:all 0.2s;
+    cursor:pointer;white-space:nowrap;flex-shrink:0;
+    border-radius:2px;transition:all 0.2s;
   }
-  .btn-copy:hover{background:#3a7bd5;color:white;}
-  .btn-copy.ok{background:#4a7c59;color:white;border-color:#4a7c59;}
-
-  /* ── States ── */
-  .loading{text-align:center;padding:60px 20px;color:#5a80aa;font-style:italic;}
+  .btn-copy:active{background:#3a7bd5;color:white;}
+  .btn-copy.ok{background:#4a7c59 !important;color:white !important;border-color:#4a7c59 !important;}
+  .empty{text-align:center;padding:40px;color:#5a80aa;font-style:italic;}
   .note{
     margin-top:24px;padding:14px 16px;
     background:#fff8e1;border:1px solid #ffe082;
     border-left:4px solid #f9a825;
     font-size:0.82rem;color:#5a4000;line-height:1.6;
   }
-  .empty{text-align:center;padding:40px;color:#5a80aa;font-style:italic;}
 </style>
 </head>
 <body>
 
-<!-- ── Lock Screen ── -->
 <div id="lockScreen">
   <p class="lock-title">Undangan Pernikahan</p>
-  <p class="lock-sub">M. Iqbal Raihan &amp; Rina Herlina</p>
-  <p class="lock-sub" style="margin-bottom:36px;">🔒 Halaman ini dilindungi password</p>
+  <p class="lock-sub">M. Iqbal Raihan &amp; Rina Herlina<br>🔒 Halaman ini dilindungi password</p>
   <input class="lock-input" type="password" id="pwInput"
     placeholder="Masukkan password"
-    onkeydown="if(event.key==='Enter') checkPassword()"/>
-  <button class="lock-btn" onclick="checkPassword()">Masuk</button>
+    onkeydown="if(event.key==='Enter')checkPw()"/>
+  <button class="lock-btn" onclick="checkPw()">Masuk</button>
   <p class="lock-error" id="lockError"></p>
 </div>
 
-<!-- ── Main App ── -->
 <div id="app">
   <div class="app-header">
     <div class="app-title">Wedding Message Copier</div>
-    <div class="app-sub">M. Iqbal Raihan &amp; Rina Herlina · Klik tombol untuk copy pesan</div>
+    <div class="app-sub">M. Iqbal Raihan &amp; Rina Herlina</div>
   </div>
-
-  <div class="app-top">
+  <div class="app-body">
     <input class="search" type="search" id="searchInput"
       placeholder="🔍 Cari nama tamu..." oninput="filterCards()"/>
-  </div>
-  <div class="count" id="countEl">Memuat data...</div>
-
-  <div id="cards"><div class="loading">Memuat daftar tamu...</div></div>
-
-  <div class="note">
-    ⚠️ <strong>Catatan:</strong> Demi menjaga privasi serta kekhidmatan acara, besar harapan kami agar Bapak/Ibu/Saudara/i tidak menyebarluaskan informasi terkait acara kepada pihak lain.
+    <div class="count" id="countEl"></div>
+    <div id="cards"></div>
+    <div class="note">
+      ⚠️ <strong>Catatan:</strong> Demi menjaga privasi serta kekhidmatan acara, besar harapan kami agar Bapak/Ibu/Saudara/i tidak menyebarluaskan informasi terkait acara kepada pihak lain.
+    </div>
   </div>
 </div>
 
 <script>
-  // ── PASSWORD ──
-  // Change this to your own password!
+  // ══ CHANGE PASSWORD HERE ══
   const PASSWORD = 'iqbalrina2026';
 
-  function checkPassword() {
-    const val = document.getElementById('pwInput').value;
-    if (val === PASSWORD) {
+  // ══ GUEST DATA ══
+  let guests = []; // [{name, link}]
+
+  // ══ LOCK ══
+  function checkPw() {
+    if (document.getElementById('pwInput').value === PASSWORD) {
       document.getElementById('lockScreen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
       loadGuests();
     } else {
-      const err = document.getElementById('lockError');
-      err.textContent = '✗ Password salah, coba lagi.';
+      document.getElementById('lockError').textContent = '✗ Password salah.';
       document.getElementById('pwInput').value = '';
-      setTimeout(() => err.textContent = '', 2500);
+      setTimeout(() => document.getElementById('lockError').textContent = '', 2000);
     }
   }
 
-  // ── LOAD guests.json ──
-  let allGuests = [];
-
+  // ══ LOAD ══
   async function loadGuests() {
-    const cardsEl = document.getElementById('cards');
+    document.getElementById('cards').innerHTML = '<div class="empty">Memuat data...</div>';
     try {
-      const res = await fetch('./guests.json?v=' + Date.now());
-      if (!res.ok) throw new Error('guests.json tidak ditemukan (HTTP ' + res.status + ')');
-      const map = await res.json(); // { token: name, ... }
+      const res = await fetch('./guests.json?t=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const map = await res.json();
 
-      allGuests = Object.entries(map).map(([token, val], i) => {
-        // Support both old format (token:name) and new format (token:{name,shortLink})
-        const name     = typeof val === 'object' ? val.name : val;
-        const base     = window.location.origin + window.location.pathname.replace('copier.html','');
-        const fullLink = base + '?name=' + token;
+      guests = Object.entries(map).map(([token, val], i) => {
+        const name = typeof val === 'object' ? val.name : val;
         const shortLink = typeof val === 'object' && val.shortLink ? val.shortLink : '';
-        return { index: i + 1, name, token, link: shortLink || fullLink, fullLink };
+        const base = window.location.href.replace('copier.html', '');
+        const fullLink = base + '?name=' + token;
+        return { i: i+1, name, link: shortLink || fullLink };
       });
 
-      renderCards(allGuests);
+      render(guests);
     } catch(e) {
-      cardsEl.innerHTML = `<div class="empty">❌ Gagal memuat data: ${e.message}<br><br>
-        Pastikan file <strong>guests.json</strong> sudah diupload ke GitHub.</div>`;
+      document.getElementById('cards').innerHTML =
+        '<div class="empty">❌ ' + e.message + '<br>Pastikan guests.json sudah diupload.</div>';
     }
   }
 
-  // ── BUILD MESSAGE ──
-  function buildMessage(g) {
-    return [
-      "Assalamu'alaikum Warahmatullahi Wabarakatuh / Salam Sejahtera,",
-      "",
-      "Tanpa mengurangi rasa hormat, melalui undangan digital ini kami bermaksud mengundang Bapak/Ibu/Saudara/i",
-      "",
-      " ",
-      `*${g.name}*`,
-      " ",
-      "",
-      "untuk hadir di acara pernikahan kami:",
-      "",
-      "M. Iqbal Raihan & Rina Herlina",
-      "",
-      "Merupakan suatu kehormatan bagi kami apabila Bapak/Ibu berkenan hadir untuk memberikan doa restu bagi kami.",
-      "",
-      "Terima kasih.",
-      "Kami yang berbahagia,",
-      "",
-      `Link undangan ${g.link}`,
-      "",
-      "_Demi menjaga privasi serta kekhidmatan acara, besar harapan kami agar Bapak/Ibu/Saudara/i tidak menyebarluaskan informasi terkait acara kepada pihak lain._"
-    ].join("\n");
+  // ══ BUILD MESSAGE ══
+  function msg(g) {
+    return "Assalamu'alaikum Warahmatullahi Wabarakatuh / Salam Sejahtera,\n\n" +
+      "Tanpa mengurangi rasa hormat, melalui undangan digital ini kami bermaksud mengundang Bapak/Ibu/Saudara/i\n\n \n" +
+      "*" + g.name + "*\n \n\n" +
+      "untuk hadir di acara pernikahan kami:\n\n" +
+      "M. Iqbal Raihan & Rina Herlina\n\n" +
+      "Merupakan suatu kehormatan bagi kami apabila Bapak/Ibu berkenan hadir untuk memberikan doa restu bagi kami.\n\n" +
+      "Terima kasih.\n" +
+      "Kami yang berbahagia,\n\n" +
+      "Link undangan " + g.link + "\n\n" +
+      "_Demi menjaga privasi serta kekhidmatan acara, besar harapan kami agar Bapak/Ibu/Saudara/i tidak menyebarluaskan informasi terkait acara kepada pihak lain._";
   }
 
-  // ── RENDER ──
-  // Store messages in a map keyed by index so onclick just passes index
-  let messageMap = {};
-
-  function renderCards(guests) {
-    const el = document.getElementById('cards');
-    document.getElementById('countEl').textContent = guests.length + ' tamu';
-    if (!guests.length) {
-      el.innerHTML = '<div class="empty">Tidak ada tamu ditemukan.</div>';
+  // ══ RENDER ══
+  function render(list) {
+    document.getElementById('countEl').textContent = list.length + ' tamu';
+    if (!list.length) {
+      document.getElementById('cards').innerHTML = '<div class="empty">Tidak ada tamu ditemukan.</div>';
       return;
     }
-    messageMap = {};
-    guests.forEach(g => { messageMap[g.index] = buildMessage(g); });
-    el.innerHTML = guests.map(g => `
-      <div class="card" data-name="${g.name.toLowerCase()}">
-        <div class="card-row">
-          <span class="guest-num">${g.index}</span>
-          <span class="guest-name">${escHtml(g.name)}</span>
-          <button class="btn-copy" onclick="doCopy(this, ${g.index})">
-            📋 Copy Pesan
-          </button>
-        </div>
-        <div class="guest-link">${escHtml(g.link)}</div>
-      </div>`).join('');
+    document.getElementById('cards').innerHTML = list.map((g, idx) =>
+      '<div class="card">' +
+        '<div class="card-row">' +
+          '<span class="guest-num">' + g.i + '</span>' +
+          '<span class="guest-name">' + esc(g.name) + '</span>' +
+          '<button class="btn-copy" onclick="copy(this,' + idx + ')">📋 Copy Pesan</button>' +
+        '</div>' +
+        '<div class="guest-link">' + esc(g.link) + '</div>' +
+      '</div>'
+    ).join('');
+
+    // store current list for copy lookup
+    window._currentList = list;
   }
 
+  // ══ FILTER ══
   function filterCards() {
     const q = document.getElementById('searchInput').value.toLowerCase();
-    const filtered = allGuests.filter(g => g.name.toLowerCase().includes(q));
-    renderCards(filtered);
+    render(guests.filter(g => g.name.toLowerCase().includes(q)));
   }
 
-  function doCopy(btn, index) {
-    const msg = messageMap[index];
-    if (!msg) return;
-    navigator.clipboard.writeText(msg).then(() => {
-      btn.textContent = '✓ Tersalin!';
-      btn.classList.add('ok');
-      setTimeout(() => { btn.textContent = '📋 Copy Pesan'; btn.classList.remove('ok'); }, 2000);
-    }).catch(() => {
-      // Fallback for older mobile browsers
-      const ta = document.createElement('textarea');
-      ta.value = msg;
-      ta.style.position = 'fixed'; ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.focus(); ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      btn.textContent = '✓ Tersalin!';
-      btn.classList.add('ok');
-      setTimeout(() => { btn.textContent = '📋 Copy Pesan'; btn.classList.remove('ok'); }, 2000);
-    });
+  // ══ COPY ══
+  function copy(btn, idx) {
+    const g = window._currentList[idx];
+    const text = msg(g);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => flash(btn)).catch(() => fallback(text, btn));
+    } else {
+      fallback(text, btn);
+    }
   }
 
-  function escHtml(s) {
+  function fallback(text, btn) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try { document.execCommand('copy'); flash(btn); } catch(e) { alert('Gagal copy. Coba lagi.'); }
+    document.body.removeChild(ta);
+  }
+
+  function flash(btn) {
+    btn.textContent = '✓ Tersalin!';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = '📋 Copy Pesan'; btn.classList.remove('ok'); }, 2000);
+  }
+
+  function esc(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 </script>
