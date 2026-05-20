@@ -651,36 +651,30 @@
 
 </div>
 
+<!--
+  PASTE THIS SNIPPET into your index.html
+  Replace the existing guest name JS block with this.
+-->
 <script>
-(async function() {
+  (async function() {
     const params  = new URLSearchParams(window.location.search);
-    const token   = params.get('name') || params.get('to') || '';
+    const token   = params.get('id') || '';
     const coverEl = document.getElementById('coverGuestName');
     const invEl   = document.getElementById('invGuestName');
- 
+
     if (!token) return;
- 
+
     let guestName = '';
- 
-    // Try to decode token from guests.json
+
     try {
-      const res = await fetch('./guests.json?v=' + Date.now());
+      const res = await fetch('./guests.json?t=' + Date.now());
       if (res.ok) {
         const map = await res.json();
         const val = map[token];
         guestName = typeof val === 'object' ? val.name : (val || '');
       }
     } catch(e) {}
- 
-    // Fallback: if token looks like a real name (has spaces), use it directly
-    // This keeps old-style ?name=Abdul+Aziz links working too
-    if (!guestName) {
-      const decoded = decodeURIComponent(token.replace(/\+/g, ' '));
-      if (decoded.includes(' ') || decoded.length < 20) {
-        guestName = decoded;
-      }
-    }
- 
+
     if (guestName) {
       if (coverEl) coverEl.textContent = guestName;
       if (invEl)   invEl.textContent   = 'Dear ' + guestName + ',';
